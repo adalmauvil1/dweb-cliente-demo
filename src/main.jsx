@@ -17,3 +17,4 @@ root.render(
     <App />
   </StrictMode>,
 );
+// El App es lo que se carga para inicar la aplicación
