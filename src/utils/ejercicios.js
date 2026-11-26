@@ -209,15 +209,17 @@ export function buscarArtistas(artistas, texto) {
 // 12. Convertir duraciones a horas.
 // Devuelve un array nuevo con las duraciones en horas. Casos: 60;90;120 → [1, 1.5, 2]; lista vacía → []. No modifiques el array original.
 
+/*
 function convertirAHoras(minutos) {
      return Number(minutos) / 60;
-   }
+}
+*/
 
 export function duracionesEnHoras(duraciones) {
   let resultado = [];
 
   for (let i = 0; i < duraciones.length; i++) {
-     let horas = convertirAHoras(duraciones[i]);
+     let horas = Number(duraciones[i]) / 60;
      resultado.push(horas);
   }
 
@@ -229,13 +231,12 @@ export function duracionesEnHoras(duraciones) {
 export function calcularCompra(precios, cantidades) {
   // TODO: Comprueba las longitudes. Usa reduce con una función con nombre, índice y acumulador inicial 0. Convierte ambos valores con Number.
   let resultado = 0;
-  let resultados = [];
+  if(precios.length !== cantidades,length){
+    return "Las longitudes son diferentes";
+  }
   for (let i = 0; i < precios.length; i++){
     let primero = precios[i] * cantidades[i];
-    resultados.push(primero);
-  }
-  for (let i = 0; i < resultados.length; i++){
-    resultado += resultados[i];
+    resultado += primero;
   }
   return resultado;
 }
@@ -244,6 +245,32 @@ export function calcularCompra(precios, cantidades) {
 // Recibe dos intervalos en minutos enteros, entre 0 y 1440 y con inicio menor que fin. Casos: 600–660 y 630–690 → true; 600–660 y 660–720 → false; intervalos separados → false. Si algún intervalo no es válido devuelve 'Horario no válido'.
 export function solapan(inicioA, finA, inicioB, finB) {
   // TODO: Convierte los cuatro parámetros con Number. Valida y comprueba si cada inicio es anterior al fin del otro intervalo.
-
+  inicioA = Number(inicioA);
+  finA = Number(finA);
+  inicioB = Number(inicioB);
+  finB = Number(finB);
+    if (0 <= inicioA && finA <= 1440 && finA >= 0){
+      if(inicioA <= finA){
+          if(0 <= inicioB && finB <= 1440 && finB >= 0){
+            if(inicioB <= finB){
+            const resultadoA = finA - inicioA;
+            const resultadoB = finB - inicioB;
+               if (resultadoA === resultadoB){
+                return true;
+               }else{
+                return false;
+               }
+            }else{
+                return "Parametros no válidos";
+            }
+          }else{
+            return "Parametros no válidos";
+          }
+      }else{
+          return "Parametros no válidos";
+      }
+    }else{
+      return "Parametros no válidos";
+    }
   return undefined;
 }
